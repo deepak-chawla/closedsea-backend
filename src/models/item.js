@@ -22,6 +22,9 @@ const ItemSchema = mongoose.Schema(
     propertie:{
         type: String,
     },
+    onSale:{
+        type: Boolean,
+    },
     instantSalePrice:{
         type: Number,
     },
