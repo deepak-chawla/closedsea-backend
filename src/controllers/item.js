@@ -1,8 +1,6 @@
 const User = require('../models/user');
 const Item = require('../models/item');
 
-
-
 exports.createSingleItem = async (req, res) => {
     try {
         const user = await User.findById({ _id: req.user._id });
@@ -58,6 +56,12 @@ exports.createSingleItem = async (req, res) => {
     } catch (error) {
         console.log(error);
     }
+}
+
+exports.getItem = async (req, res)=>{
+    await Item.findById(req.params.id)
+    .then(item => res.status(200).json({item: item}))
+    .catch(error => res.status(400).json({error: error}))
 }
 
 
