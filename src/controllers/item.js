@@ -1,6 +1,6 @@
 const User = require('../models/user');
 const Item = require('../models/item');
-const { findById } = require('../models/user');
+
 
 
 exports.createSingleItem = async (req, res) => {
