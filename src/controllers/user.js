@@ -1,36 +1,30 @@
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 
-const getJWtToken = (_id, name) => {
-    return jwt.sign({ _id, name }, process.env.JWT_KEY);
+const getJWtToken = (_id, address) => {
+    return jwt.sign({ _id, address }, process.env.JWT_KEY);
 }
 
 exports.signIn = async (req, res) => {
-    try {
-        const { name, address } = req.body;
-        const _user = new User({
-            name, address
-        });
+    const { address } = req.body;
+    
+    const _user = new User({
+        address
+    });
 
-        const user = await User.findOne({ address: req.body.address });
-        if (user) {
-            const token = getJWtToken(user._id, name);
-            console.log("user exist")
-            res.status(200).json({ token: token });
-        }
-        else {
-            await _user.save((err, user) => {
-                if (user) {
-                    const token = getJWtToken(user._id, name);
-                    res.status(200).json({ token: token });
-                }
-                else {
-                    res.status(400).json({ message: err.message })
-                }
-            })
-        }
-    } catch (error) {
-        res.status(400).json(error);
+    const user = await User.findOne({ address: address });
+    if (user) {
+        const token = getJWtToken(user._id, user.address);
+        res.status(200).json({ token: token });
+    } else {
+        _user.save(async(error, user) => {
+            if (error) {
+                res.status(400).json({ message: error.message });
+            } else {
+                const token = await getJWtToken(user._id, user.address);
+                res.status(200).json({ token: token });
+            }
+        });
     }
 }
 
@@ -60,11 +54,11 @@ exports.follow = (req, res) => {
     })
 }
 
-exports.profile = async (req, res)=>{
+exports.profile = async (req, res) => {
     await User.findById(req.params.id)
-    .select('-__v')
-    .then(user => {
-        res.status(200).json({profile: user});
-    })
-    .catch(error => {res.status(400).json({message: error.message})}) 
+        .select('-__v')
+        .then(user => {
+            res.status(200).json({ profile: user });
+        })
+        .catch(error => { res.status(400).json({ message: error.message }) })
 }

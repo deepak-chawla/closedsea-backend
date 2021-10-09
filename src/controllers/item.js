@@ -8,13 +8,13 @@ exports.createSingleItem = async (req, res) => {
             const { itemName, description, royalties, size, propertie,
                 onSale, instantSalePrice, unlockOncePurchased, collection } = req.body
 
-            const itemPicture = req.file.filename;
+            //const itemPicture = req.file.filename;
             const itemId = Math.floor(1000 + Math.random() * 6000);
 
             const _item = new Item({
                 itemId: itemId,
                 itemName,
-                itemPicture: itemPicture,
+                //itemPicture: itemPicture,
                 description,
                 royalties,
                 size,

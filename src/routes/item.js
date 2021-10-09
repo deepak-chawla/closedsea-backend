@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-router.post('/create-item', requireSignIn, upload.single('itemImg'), createSingleItem);
+router.post('/create-item', requireSignIn,  createSingleItem);
 router.get('/get-items', getAllItems);
 router.get('/get-item/:id', getItem);
 router.delete('/delete-item/:id', requireSignIn, deleteItemById);
