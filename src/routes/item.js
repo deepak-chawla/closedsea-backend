@@ -1,5 +1,6 @@
 const router = require('express').Router();
-const { createSingleItem } = require('../controllers/item');
+const { createSingleItem, getAllItems, deleteItemById, 
+  addItemOnSale, removeItemOnSale } = require('../controllers/item');
 const { requireSignIn } = require('../common-middleware/');
 const path = require('path');
 const multer = require('multer');
@@ -16,5 +17,9 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 router.post('/create-item', requireSignIn, upload.single('itemImg'), createSingleItem);
+router.get('/get-items', getAllItems);
+router.delete('/delete-item/:id', requireSignIn, deleteItemById);
+router.post('/onsale-item/:id', requireSignIn, addItemOnSale);
+router.post('/offsale-item/:id', requireSignIn, removeItemOnSale);
 
 module.exports = router;

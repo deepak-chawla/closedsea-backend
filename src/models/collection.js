@@ -1,8 +1,15 @@
 const mongoose = require('mongoose');
 
 const collectionSchema = mongoose.Schema({
-    collectionName:{type: String},
-    items:[{type: mongoose.Schema.Types.ObjectId, ref: 'Item'}]
+    name: {
+        type: String,
+    },
+    items: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Item'
+        }
+    ]
 });
 
-exports.module = mongoose.model('Collection',collectionSchema);
+module.exports = mongoose.model('Collection', collectionSchema);

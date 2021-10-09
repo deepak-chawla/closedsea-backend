@@ -24,6 +24,7 @@ const ItemSchema = mongoose.Schema(
     },
     onSale:{
         type: Boolean,
+        default: false
     },
     instantSalePrice:{
         type: Number,
@@ -33,10 +34,12 @@ const ItemSchema = mongoose.Schema(
         default: false
     },
     creator:{
-        type: mongoose.Schema.Types.ObjectId, ref: 'User'
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'User'
     },
     owner:{
-        type: mongoose.Schema.Types.ObjectId, ref: 'User'
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'User'
     },
     note:{
         type: String,
